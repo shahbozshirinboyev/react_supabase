@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 function App() {
   const [users, setUsers] = useState([]);
+  const [user, setUser] = useState({ name: "", age: "" });
 
   console.log(users);
 
@@ -16,8 +17,53 @@ function App() {
     setUsers(data);
   }
 
+  const handleChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  async function createUser(e) {
+    e.preventDefault();
+    await supabase.from("users").insert({ name: user.name, age: user.age });
+    fetchUsers();
+    setUser({ name: "", age: "" })
+  }
+
   return (
     <>
+      <div className="container py-12">
+        <form
+          onSubmit={createUser}
+          action=""
+          className="grid grid-cols-2 max-w-[650px] gap-4 border p-4 rounded-md"
+        >
+          <label htmlFor="" className="grid grid-cols-1">
+            <span>Name:</span>
+            <input
+              type="text"
+              placeholder="Enter name ..."
+              value={user.name}
+              name="name"
+              onChange={handleChange}
+              className="border px-2 py-1 rounded-md"
+            />
+          </label>
+
+          <label htmlFor="" className="grid grid-cols-1">
+            <span>Age:</span>
+            <input
+              type="number"
+              placeholder="Enter age ..."
+              value={user.age}
+              name="age"
+              onChange={handleChange}
+              className="border px-2 py-1 rounded-md"
+            />
+          </label>
+          <button className="border rounded-md py-1 w-[100px] hover:bg-gray-200 transition-all duration-200">
+            {"+ "}Add
+          </button>
+        </form>
+      </div>
       {/* Table START */}
       <table className="table-auto border border-collapse container px-4 py-2 text-center">
         <thead>
