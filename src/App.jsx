@@ -6,8 +6,6 @@ function App() {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState({ name: "", age: "" });
 
-  console.log(users);
-
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -25,7 +23,7 @@ function App() {
     e.preventDefault();
     await supabase.from("users").insert({ name: user.name, age: user.age });
     fetchUsers();
-    setUser({ name: "", age: "" })
+    setUser({ name: "", age: "" });
   }
 
   return (
@@ -71,6 +69,7 @@ function App() {
             <th className="border">ID</th>
             <th className="border">Name</th>
             <th className="border">Age</th>
+            <th className="border">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -79,6 +78,14 @@ function App() {
               <td className="border">{user.id}</td>
               <td className="border">{user.name}</td>
               <td className="border">{user.age}</td>
+              <td className="border w-[150px]">
+                <button className="border m-1 px-2 py-2 rounded-md hover:bg-gray-200 transition-all duration-200">
+                  <i className="bi bi-pencil flex justify-center items-center"></i>
+                </button>
+                <button className="border m-1 px-2 py-2 rounded-md hover:bg-gray-200 transition-all duration-200">
+                  <i className="bi bi-trash flex justify-center items-center"></i>
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
