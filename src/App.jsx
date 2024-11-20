@@ -26,6 +26,14 @@ function App() {
     setUser({ name: "", age: "" });
   }
 
+  async function deleteUser(userId) {
+    await supabase
+      .from("users")
+      .delete()
+      .eq("id", userId);
+      fetchUsers();
+  }
+
   return (
     <>
       <div className="container py-12">
@@ -79,10 +87,15 @@ function App() {
               <td className="border">{user.name}</td>
               <td className="border">{user.age}</td>
               <td className="border w-[150px]">
-                <button className="border m-1 px-2 py-2 rounded-md hover:bg-gray-200 transition-all duration-200">
+                <button className="border m-1 px-2 py-2 rounded-md hover:bg-sky-700 hover:text-gray-100 transition-all duration-200">
                   <i className="bi bi-pencil flex justify-center items-center"></i>
                 </button>
-                <button className="border m-1 px-2 py-2 rounded-md hover:bg-gray-200 transition-all duration-200">
+                <button
+                  onClick={() => {
+                    deleteUser(user.id);
+                  }}
+                  className="border m-1 px-2 py-2 rounded-md hover:bg-red-700 hover:text-gray-100 transition-all duration-200"
+                >
                   <i className="bi bi-trash flex justify-center items-center"></i>
                 </button>
               </td>
