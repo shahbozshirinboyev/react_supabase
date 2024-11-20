@@ -18,7 +18,26 @@ function App() {
 
   return (
     <>
-      <div className="text-red-700">app</div>
+      {/* Table START */}
+      <table className="table-auto border border-collapse container px-4 py-2 text-center">
+        <thead>
+          <tr>
+            <th className="border">ID</th>
+            <th className="border">Name</th>
+            <th className="border">Age</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user.id}>
+              <td className="border">{user.id}</td>
+              <td className="border">{user.name}</td>
+              <td className="border">{user.age}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {/* Table END */}
     </>
   );
 }
